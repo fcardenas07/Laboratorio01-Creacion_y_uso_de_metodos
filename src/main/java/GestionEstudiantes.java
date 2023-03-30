@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class GestionEstudiantes {
     public static void main(String[] args) {
-        double[][] notasEstudiantes = new double[5][5];
+        double[][] notasEstudiantes = new double[50][5];
         menu(notasEstudiantes);
     }
 
@@ -19,16 +19,9 @@ public class GestionEstudiantes {
             case 3 -> mostrarEstudiantesReprobados(notasEstudiantes);
             case 4 -> mostrarEstudiantesEnExamen(notasEstudiantes);
             case 5 -> mostrarEstadoEstudiantes(notasEstudiantes);
-            case 6 -> mostrarNotasEstudiantes(notasEstudiantes);
-            case 7 -> salir();
+            case 6 -> salir();
         }
         menu(notasEstudiantes);
-    }
-
-    private static void mostrarNotasEstudiantes(double[][] notasEstudiantes) {
-        for (double[] estudiante : notasEstudiantes) {
-            System.out.println(Arrays.toString(estudiante));
-        }
     }
 
     private static void salir() {
@@ -36,7 +29,12 @@ public class GestionEstudiantes {
     }
 
     private static void mostrarEstadoEstudiantes(double[][] notasEstudiantes) {
-        for (int i = 0; i < notasEstudiantes.length; i++) {
+        if (cantidadEstudiantes(notasEstudiantes) < 1) {
+            System.out.println("No hay Estudiantes");
+            return;
+        }
+
+        for (int i = 0; i < cantidadEstudiantes(notasEstudiantes); i++) {
             System.out.println("Estudiante " + (i + 1) + " -> " + estadoEstudiante(notasEstudiantes[i]));
         }
     }
@@ -46,6 +44,10 @@ public class GestionEstudiantes {
     }
 
     private static void mostrarEstudiantesEnExamen(double[][] notasEstudiantes) {
+        if (cantidadEstudiantes(notasEstudiantes) < 1) {
+            System.out.println("No hay Estudiantes");
+            return;
+        }
         System.out.println("La cantidad de estudiantes que van examen es: " + contarEstudiantesEnExamen(notasEstudiantes));
     }
 
@@ -61,6 +63,10 @@ public class GestionEstudiantes {
     }
 
     private static void mostrarEstudiantesReprobados(double[][] notasEstudiantes) {
+        if (cantidadEstudiantes(notasEstudiantes) < 1) {
+            System.out.println("No hay Estudiantes");
+            return;
+        }
         System.out.println("La cantidad de estudiantes que reprueban es: " + contarEstudiantesReprobados(notasEstudiantes));
     }
 
@@ -92,8 +98,12 @@ public class GestionEstudiantes {
 
     private static double notaAleatoria() {
         double notaAleatoria = Math.random() * 5.9 + 1;
-        String notaConUnDecimal = String.format("%.1f", notaAleatoria).replace(",", ".");
+        String notaConUnDecimal = redondearAUnDecimal(notaAleatoria);
         return Double.parseDouble(notaConUnDecimal);
+    }
+
+    private static String redondearAUnDecimal(double numero) {
+        return String.format("%.1f", numero).replace(",", ".");
     }
 
     private static boolean matrizLlena(double[][] notasEstudiantes) {
@@ -115,6 +125,10 @@ public class GestionEstudiantes {
     }
 
     private static void mostrarEstudiantesAprobados(double[][] notasEstudiantes) {
+        if (cantidadEstudiantes(notasEstudiantes) < 1) {
+            System.out.println("No hay Estudiantes");
+            return;
+        }
         System.out.println("La cantidad de estudiantes que aprueban es: " + contarEstudiantesAprobados(notasEstudiantes));
     }
 
@@ -145,7 +159,7 @@ public class GestionEstudiantes {
             promedio += notasEstudiante[i] * ponderaciones[i];
         }
 
-        return promedio;
+        return Double.parseDouble(redondearAUnDecimal(promedio));
     }
 
     private static int ingresarOpcion() {
@@ -159,7 +173,7 @@ public class GestionEstudiantes {
     }
 
     private static int validarOpcionIngresada(int numero) {
-        if (numero < 1 || numero > 7) {
+        if (numero < 1 || numero > 6) {
             System.out.println("Ingrese una opcion valida");
             return ingresarOpcion();
         }
@@ -173,14 +187,13 @@ public class GestionEstudiantes {
 
     private static void mostrarOpciones() {
         System.out.println("""
-                              -> Menu Gestion Estudiantes
-                              1. Agregar estudiante
-                              2. Mostrar cantidad de estudiantes que aprueban
-                              3. Mostrar cantidad de estudiantes que reprueban
-                              4. Mostrar la cantidad de estudiantes que van a examen
-                              5. Mostrar el estado de todos los estudiantes
-                              6. Mostrar notas estudiantes
-                              7. Salir
-                              -> Ingrese una opcion:""");
+                -> Menu Gestion Estudiantes
+                1. Agregar estudiante
+                2. Mostrar cantidad de estudiantes que aprueban
+                3. Mostrar cantidad de estudiantes que reprueban
+                4. Mostrar la cantidad de estudiantes que van a examen
+                5. Mostrar el estado de todos los estudiantes
+                6. Salir
+                -> Ingrese una opcion:""");
     }
 }
