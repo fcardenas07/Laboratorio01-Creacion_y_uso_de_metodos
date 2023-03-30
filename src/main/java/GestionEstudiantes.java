@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class GestionEstudiantes {
+public class GestionEstudiantes {
+    public static void main(String[] args) {
+
+    }
 }
