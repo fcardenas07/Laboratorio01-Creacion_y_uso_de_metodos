@@ -37,7 +37,7 @@ public class GestionEstudiantes {
 
     private static void mostrarEstadoEstudiantes(double[][] notasEstudiantes) {
         for (int i = 0; i < notasEstudiantes.length; i++) {
-            System.out.println("Estudiante " + (i + 1) + estadoEstudiante(notasEstudiantes[i]));
+            System.out.println("Estudiante " + (i + 1) + " -> " + estadoEstudiante(notasEstudiantes[i]));
         }
     }
 
@@ -91,7 +91,7 @@ public class GestionEstudiantes {
     }
 
     private static double notaAleatoria() {
-        double notaAleatoria = Math.random() * 6.9 + 1;
+        double notaAleatoria = Math.random() * 5.9 + 1;
         String notaConUnDecimal = String.format("%.1f", notaAleatoria).replace(",", ".");
         return Double.parseDouble(notaConUnDecimal);
     }
